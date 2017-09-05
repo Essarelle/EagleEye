@@ -1,5 +1,4 @@
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause) [![Gitter](https://badges.gitter.im/EagleEye-/Lobby.svg)](https://gitter.im/EagleEye-/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Eagle eye is a prototyping software for computer vision algorithms.
 
