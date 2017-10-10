@@ -6,7 +6,18 @@
 # FLANN_INCLUDE_DIRS - Directories containing the FLANN include files.
 # FLANN_LIBRARIES - Libraries needed to use FLANN.
 # FLANN_DEFINITIONS - Compiler flags for FLANN.
+find_package(PkgConfig)
+pkg_check_modules(PC_FLANN flann)
+set(FLANN_DEFINITIONS ${PC_FLANN_CFLAGS_OTHER})
 
+find_path(FLANN_INCLUDE_DIR flann/flann.hpp
+    HINTS ${PC_FLANN_INCLUDEDIR} ${PC_FLANN_INCLUDE_DIRS})
+
+find_library(FLANN_LIBRARY flann
+    HINTS ${PC_FLANN_LIBDIR} ${PC_FLANN_LIBRARY_DIRS})
+
+set(FLANN_INCLUDE_DIRS ${FLANN_INCLUDE_DIR})
+set(FLANN_LIBRARIES ${FLANN_LIBRARY})
 
 find_path(Aquila_FLANN_INCLUDE_DIR flann/flann.hpp
     HINTS ${PC_FLANN_INCLUDEDIR} ${PC_FLANN_INCLUDE_DIRS})
@@ -31,3 +42,7 @@ find_package_handle_standard_args(Flann DEFAULT_MSG
     Aquila_FLANN_LIBRARY_DEBUG Aquila_FLANN_INCLUDE_DIR)
 
 mark_as_advanced(Aquila_FLANN_LIBRARY_DEBUG Aquila_FLANN_LIBRARY_RELEASE Aquila_FLANN_CUDA_LIBRARY_RELEASE Aquila_FLANN_CUDA_LIBRARY_DEBUG Aquila_FLANN_LIBRARIES Aquila_FLANN_INCLUDE_DIR)
+
+if(FLANN_FOUND)
+  message(STATUS "FLANN found (include: ${FLANN_INCLUDE_DIRS}, lib: ${FLANN_LIBRARIES})")
+endif(FLANN_FOUND)
