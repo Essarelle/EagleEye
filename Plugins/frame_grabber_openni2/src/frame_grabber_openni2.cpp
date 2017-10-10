@@ -89,7 +89,7 @@ bool frame_grabber_openni2::loadData(std::string file_path)
             rc = _device->open(openni::ANY_DEVICE);
         if(rc != openni::STATUS_OK)
         {
-            LOG(info) << "Unable to connect to openni2 compatible device: " << openni::OpenNI::getExtendedError();
+            MO_LOG(info) << "Unable to connect to openni2 compatible device: " << openni::OpenNI::getExtendedError();
             return false;
         }
         _depth.reset(new openni::VideoStream());
@@ -97,7 +97,7 @@ bool frame_grabber_openni2::loadData(std::string file_path)
         rc = _depth->create(*_device, openni::SENSOR_DEPTH);
         if( rc != openni::STATUS_OK)
         {
-            LOG(info) << "Unable to retrieve depth stream: " << openni::OpenNI::getExtendedError();
+            MO_LOG(info) << "Unable to retrieve depth stream: " << openni::OpenNI::getExtendedError();
             return false;
         }
         //openni::VideoMode mode = _depth->getVideoMode();
@@ -105,12 +105,12 @@ bool frame_grabber_openni2::loadData(std::string file_path)
         //rc = _depth->setVideoMode(mode);
         if(rc != openni::STATUS_OK)
         {
-            LOG(info) << "Unable to set video resolution";
+            MO_LOG(info) << "Unable to set video resolution";
         }
 
         _depth->addNewFrameListener(this);
         _depth->start();
-        LOG(info) << "Connected to device " << _device->getDeviceInfo().getUri();
+        MO_LOG(info) << "Connected to device " << _device->getDeviceInfo().getUri();
         return true;
         
     }
@@ -121,7 +121,7 @@ void frame_grabber_openni2::onNewFrame(openni::VideoStream& stream)
     openni::Status rc = stream.readFrame(&_frame);
     if(rc != openni::STATUS_OK)
     {
-        LOG(debug) << "Unable to read new depth frame: " << openni::OpenNI::getExtendedError();
+        MO_LOG(debug) << "Unable to read new depth frame: " << openni::OpenNI::getExtendedError();
         return;
     }
     int height = _frame.getHeight();
